@@ -25,7 +25,6 @@ void CtrlHandle() {
                 if (RemoteControl::rcInfo.sRight == UP_POS) {
                     HeadlessSetVelocity(RemoteControl::rcInfo.right_col * 2,
                                         RemoteControl::rcInfo.right_rol * 2, RemoteControl::rcInfo.left_rol);
-                    AutoChassisSet(0,0,PI/2);
                 } else if (RemoteControl::rcInfo.sRight == MID_POS) {
                     HeadkeepSetVelocity(RemoteControl::rcInfo.right_col * 2,
                                         RemoteControl::rcInfo.right_rol * 2, RemoteControl::rcInfo.left_rol);
@@ -33,7 +32,9 @@ void CtrlHandle() {
                 break;
             case DOWN_POS:
                 if (RemoteControl::rcInfo.sRight == UP_POS) {
-                AutoSetVelocity();
+                    AutoChassisSet(2,0,0);
+                }else if (RemoteControl::rcInfo.sRight == MID_POS) {
+                    AutoSetVelocity();
                 }
                 break;
             default:

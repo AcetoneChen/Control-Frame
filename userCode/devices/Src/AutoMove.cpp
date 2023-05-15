@@ -12,15 +12,18 @@ Spin O;
 void AutoMove::Handle() {
     if (!StopFlag) {
         vx = X.Handle(IMU::imu.position.displace[1]);
-        vy = Y.Handle(IMU::imu.position.displace[0]);
-        vo = O.Handle(IMU::imu.attitude.yaw);
+        if(vx < 0){
+            vx = 0;
+        }
+       // vy = Y.Handle(IMU::imu.position.displace[0]);
+       // vo = O.Handle(IMU::imu.attitude.yaw);
     } else {
         AutoChassisStop();
     }
-  /*  if (X.FinishFlag && Y.FinishFlag && !SendFlag) {
+  if (X.FinishFlag) {
         StopMove();
-        CompleteTask();
-        SendFlag = true;
+     /*   CompleteTask();
+        SendFlag = true;*/
     }//完成后发送*/
 }
 
@@ -28,8 +31,8 @@ void AutoMove::StartMove(float x_distance, float y_distance, float o_angle) {
     StopFlag = false;
     SendFlag = false;
     X.Calc(x_distance);
-    Y.Calc(y_distance);
-    O.Calc(o_angle);
+  //  Y.Calc(y_distance);
+  //  O.Calc(o_angle);
     X.expectPos = 0;
     Y.expectPos = 0;
     IMU::imu.position.displace[0] = 0;
@@ -43,13 +46,14 @@ void AutoMove::StopMove() {
     X.Stop();
     Y.Stop();
     O.Stop();
+    AutoChassisStop();
 }
 
 
 Move_X::Move_X() {
     Para.a = 1.5;
-    Para.v_max = 2;
-    pid.kp = 1;
+    Para.v_max = 5;
+    pid.kp = 0.8;
     pid.ki = 0;
     pid.kd = 0;
 }
@@ -82,7 +86,7 @@ float Move_X::Handle(float reference) {
             expectPos += Para.v * 0.001f;
         }
 
-        v_rel = Para.v + pid.PIDCalc(expectPos, reference, 2.0);
+        v_rel = Para.v + pid.PIDCalc(expectPos, reference, 5.0);
         if (v_rel > Para.v_max) {
             v_rel = Para.v_max;
         }

@@ -77,7 +77,7 @@ COMMU_INIT_t chassisCommuInit4 = {
 
 
 FOUR_Motor_4010 Classis_Motor(&chassisCommuInit1, &chassisCommuInit2, &chassisCommuInit3, &chassisCommuInit4,
-                              &chassisMotorInit1, &chassisMotorInit1, &chassisMotorInit3, &chassisMotorInit2);
+                              &chassisMotorInit2, &chassisMotorInit2, &chassisMotorInit2, &chassisMotorInit2);
 
 Motor_4315 RFL(MOTOR_ID_1, &swerveMotorInit);
 Motor_4315 RFR(MOTOR_ID_2, &swerveMotorInit);
@@ -145,8 +145,8 @@ void AutoSetVelocity() {
     ChassisStopFlag = false;
     autoMove.Handle();
     FBVelocity = autoMove.vx;
-    LRVelocity = autoMove.vy;
-    RTVelocity = autoMove.vo;
+    LRVelocity = 0;
+    RTVelocity = 0;
 
 }
 

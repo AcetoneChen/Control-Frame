@@ -174,7 +174,6 @@ void FOUR_Motor_4010::MotorStateUpdate(uint32_t id) {
 
             break;
     }
-
 }
 
 /**
