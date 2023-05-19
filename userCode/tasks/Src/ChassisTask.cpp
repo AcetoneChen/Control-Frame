@@ -86,7 +86,7 @@ Motor_4315 RBL(MOTOR_ID_4, &swerveMotorInit);
 
 AutoMove autoMove;
 bool ChassisStopFlag = true;
-float FBVelocity, LRVelocity, RTVelocity;
+float FBVelocity{0}, LRVelocity{0}, RTVelocity{0};
 float ZeroYaw;
 
 void ChassisStart() {
@@ -100,6 +100,8 @@ void ChassisStart() {
 void ChassisHandle() {
     if (!ChassisStopFlag) {
         WheelsSpeedCalc(FBVelocity, LRVelocity, RTVelocity);
+    } else {
+        WheelsSpeedCalc(0, 0, 0);
     }
 }
 
@@ -109,6 +111,18 @@ void ChassisHandle() {
  * @param _lrV 底盘左右方向速度
  * @param _rtV 底盘旋转速度
  */
+void ClassisSetFBVlocity(float _fbV) {
+    ChassisStopFlag = false;
+    FBVelocity = _fbV;
+}
+void ClassisSetLRVlocity(float _lrV) {
+    ChassisStopFlag = false;
+    LRVelocity = _lrV;
+}
+void ClassisSetRTVlocity(float _rtV) {
+    ChassisStopFlag = false;
+    RTVelocity = _rtV;
+}
 void ChassisSetVelocity(float _fbV, float _lrV, float _rtV) {
     ChassisStopFlag = false;
     FBVelocity = _fbV;

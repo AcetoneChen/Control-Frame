@@ -3,7 +3,21 @@
 //
 #include "ControlTask.h"
 
-
+static int time = 0;
+void AutoControlStop(){
+    ChassisStop();
+    time = 0;
+}
+void AutoControl(){
+    if(time < 2700){
+        ClassisSetRTVlocity(0.1);
+    }else if(time < 5000){
+        ClassisSetFBVlocity(0.5);
+    }else{
+        ChassisStop();
+    }
+    time++;
+}
 void CtrlHandle() {
     if (RemoteControl::rcInfo.sRight == DOWN_POS) {//右侧三档，急停模式
         ChassisStop();
@@ -32,9 +46,9 @@ void CtrlHandle() {
                 break;
             case DOWN_POS:
                 if (RemoteControl::rcInfo.sRight == UP_POS) {
-                    AutoChassisSet(2,0,0);
+                    AutoControlStop();
                 }else if (RemoteControl::rcInfo.sRight == MID_POS) {
-                    AutoSetVelocity();
+                    AutoControl();
                 }
                 break;
             default:

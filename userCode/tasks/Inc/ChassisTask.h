@@ -63,6 +63,9 @@ void WheelsSpeedCalc(float fbVelocity, float lrVelocity, float rtVelocity);
 
 void ChassisStop();
 
+void ClassisSetFBVlocity(float _fbV);
+void ClassisSetLRVlocity(float _lrV);
+void ClassisSetRTVlocity(float _rtV);
 void ChassisSetVelocity(float _fbV, float _lrV, float _rtV);
 
 void HeadlessSetVelocity(float _fbV, float _lrV, float _rtV);
